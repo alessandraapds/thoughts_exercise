@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import ReactDOM from "react-dom";
 import { AddThoughtForm } from "./components/AddThoughtForm";
 import { Thought } from "./components/Thought";
 import { generateId, getNewExpirationTime } from "./components/utilities";
+import "./styles.css";
+import "./App.css";
 
 function App() {
   const [thoughts, setThoughts] = useState([
@@ -26,7 +29,7 @@ function App() {
   };
 
   return (
-    <div className="App">
+    <div className="App" id="app">
       <header>
         <h1>Passing Thoughts</h1>
       </header>
@@ -45,5 +48,7 @@ function App() {
     </div>
   );
 }
+
+// ReactDOM.render(<App />, document.getElementById("app"));
 
 export default App;
