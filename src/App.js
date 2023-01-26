@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { AddThoughtForm } from './components/AddThoughtForm';
-import { Thought } from './components/Thought';
-import { generateId, getNewExpirationTime } from './components/utilities';
+import React, { useState } from "react";
+import { AddThoughtForm } from "./components/AddThoughtForm";
+import { Thought } from "./components/Thought";
+import { generateId, getNewExpirationTime } from "./components/utilities";
 
 function App() {
   const [thoughts, setThoughts] = useState([
     {
       id: generateId(),
-      text: 'This is a place for your passing thoughts.',
+      text: "This is a place for your passing thoughts.",
       expiresAt: getNewExpirationTime(),
     },
     {
@@ -18,9 +18,12 @@ function App() {
   ]);
 
   const addThought = (thought) => {
-    console.log('adding thought', thought);
-    setThoughts((thoughts) =>[thought, ...thoughts]);
-  }
+    setThoughts((thoughts) => [thought, ...thoughts]);
+  };
+
+  const removeThought = (id) => {
+    setThoughts((thoughts) => thoughts.filter((thought) => id !== thought.id));
+  };
 
   return (
     <div className="App">
@@ -31,7 +34,11 @@ function App() {
         <AddThoughtForm addThought={addThought} />
         <ul className="thoughts">
           {thoughts.map((thought) => (
-            <Thought key={thought.id} thought={thought} />
+            <Thought
+              removeThought={removeThought}
+              key={thought.id}
+              thought={thought}
+            />
           ))}
         </ul>
       </main>
@@ -39,4 +46,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

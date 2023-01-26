@@ -1,31 +1,33 @@
-import React, { useState } from 'react';
-import { generateId, getNewExpirationTime } from './utilities';
+import React, { useState } from "react";
+import { generateId, getNewExpirationTime } from "./utilities";
 
-export function AddThoughtForm(props) {
-console.log(props, 'props');
-  
-
+export function AddThoughtForm({ addThought }) {
   const [text, setText] = useState("");
 
   const handleTextChange = (event) => {
     setText(event.target.value);
   };
 
-
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("hello submit");
-    const newThought = {
-      id: generateId(),
-      text: text,
-      expiresAt: getNewExpirationTime(),
-    }; 
 
-    props.addThought(newThought); 
-   }     
-  
+    if (text.length > 1) {
+      const newThought = {
+        id: generateId(),
+        text: text,
+        expiresAt: getNewExpirationTime(),
+      };
+
+      addThought(newThought);
+    } else {
+      alert("Type something");
+    }
+
+    setText("");
+  };
+
   return (
-    <form className="AddThoughtForm" onSubmit={handleSubmit} >
+    <form className="AddThoughtForm" onSubmit={handleSubmit}>
       <input
         type="text"
         aria-label="What's on your mind?"
@@ -33,7 +35,9 @@ console.log(props, 'props');
         value={text}
         onChange={handleTextChange}
       />
-    <button type="submit" value="Add">Add</button>
+      <button type="submit" value="Add">
+        Add
+      </button>
     </form>
   );
 }
